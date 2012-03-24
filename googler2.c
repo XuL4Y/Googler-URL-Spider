@@ -31,7 +31,7 @@ int WriteFile(char *file,char *str);
 void help()
 {
  puts(
-  "Simple Googler v0.001\n"
+  "Simple Google url spider v1.0\n"
   "./code dork number_of_searchs log.txt\n"
   " ------------------------------------\n"
   " by Cooler_ , BugSec Team , contact: c00f3r[at]gmail[dot]com\n"
