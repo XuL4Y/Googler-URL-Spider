@@ -1,5 +1,5 @@
 /*
-Googler v 0.001
+Googler v 1.0
 autor:   Cooler_
 contato: c00f3r[at]gmail[dot]com
 
