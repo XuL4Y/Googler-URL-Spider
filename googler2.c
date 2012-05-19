@@ -1,5 +1,5 @@
 /*
-Googler v 1.0
+Googler v 0.001
 autor:   Cooler_
 contato: c00f3r[at]gmail[dot]com
 
@@ -20,7 +20,6 @@ apt-get install libcurl-dev; gcc -o Googler Googler.c -lcurl; ./Googler
 #include <curl/curl.h>
 #include <curl/easy.h>
 
-
 void *xmalloc(unsigned int len);
 char *StrRep(char *st, char *orig, char *repl,int mim);
 char *regexp (char *string, char *patrn);
@@ -31,7 +30,7 @@ int WriteFile(char *file,char *str);
 void help()
 {
  puts(
-  "Simple Google url spider v1.0\n"
+  "Simple Googler v0.002\n"
   "./code dork number_of_searchs log.txt\n"
   " ------------------------------------\n"
   " by Cooler_ , BugSec Team , contact: c00f3r[at]gmail[dot]com\n"
@@ -50,6 +49,9 @@ int main(int argc, char ** argv)
 // curl vars
  CURL *curl_handle;  
  curl_global_init(CURL_GLOBAL_ALL); 
+
+// file
+ char *arquivo=(char *)xmalloc(sizeof(char)*12);
 
 // Google URL vars
  char *GOOGLE1="http://www.google.com/search?&q=";
@@ -72,9 +74,29 @@ int main(int argc, char ** argv)
   return 0;    
  }    
 
- BUSCA=argv[1];
- times=atoi(argv[2]);
- char *arquivo=argv[3];
+ if(strlen(argv[1])<=127)
+  BUSCA=argv[1];
+ else
+ {
+  puts("argv from 'dork' very large... error");
+  return 0;
+ }
+
+ if(strlen(argv[2])<=4)
+  times=atoi(argv[2]);
+ else 
+ {
+  puts("argv from 'times' very large... error");
+  return 0;
+ }
+
+ if(strlen(argv[3])<=10)
+  arquivo=argv[3]; 
+ else 
+ {
+  puts("argv from 'arquivo' very large... error");
+  return 0;
+ }
 
  fprintf(stdout,"\nProcurando por %s em  %d paginas\n",BUSCA,times);
 
@@ -83,7 +105,7 @@ int main(int argc, char ** argv)
   strncpy(GoogleURL,GOOGLE1,sizeof(GOOGLE1)*strlen(GOOGLE1));
   strncat(GoogleURL,BUSCA,sizeof(BUSCA)*strlen(BUSCA));
   strncat(GoogleURL,GOOGLE2,sizeof(GOOGLE2)*strlen(GOOGLE2));
-  sprintf(NUM,"%d",times);
+  sprintf(NUM,"%255d",times);
   strncat(GoogleURL,NUM,sizeof(NUM)); 
   strncat(GoogleURL,"0",sizeof(char));
 
@@ -128,7 +150,8 @@ int main(int argc, char ** argv)
 
   times--;
  }
-
+ 
+ free(arquivo);
  free(NUM);
  free(GoogleURL);
  free(stack);
