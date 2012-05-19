@@ -50,10 +50,9 @@ int main(int argc, char ** argv)
  CURL *curl_handle;  
  curl_global_init(CURL_GLOBAL_ALL); 
 
-// file
- char *arquivo=(char *)xmalloc(sizeof(char)*12);
-
-// Google URL vars
+// argv file
+ char *arquivo;
+// URL googler make
  char *GOOGLE1="http://www.google.com/search?&q=";
  char *GOOGLE2="&start=";
  char *NUM=(char *)xmalloc(256*sizeof(char));
@@ -98,14 +97,14 @@ int main(int argc, char ** argv)
   return 0;
  }
 
- fprintf(stdout,"\nProcurando por %s em  %d paginas\n",BUSCA,times);
+ fprintf(stdout,"\nProcurando por %s em  %d paginas, salvar em %s \n",BUSCA,times,arquivo);
 
  while(times)
  {
   strncpy(GoogleURL,GOOGLE1,sizeof(GOOGLE1)*strlen(GOOGLE1));
   strncat(GoogleURL,BUSCA,sizeof(BUSCA)*strlen(BUSCA));
   strncat(GoogleURL,GOOGLE2,sizeof(GOOGLE2)*strlen(GOOGLE2));
-  sprintf(NUM,"%255d",times);
+  sprintf(NUM,"%d",times);
   strncat(GoogleURL,NUM,sizeof(NUM)); 
   strncat(GoogleURL,"0",sizeof(char));
 
@@ -150,12 +149,11 @@ int main(int argc, char ** argv)
 
   times--;
  }
- 
- free(arquivo);
+  
  free(NUM);
  free(GoogleURL);
  free(stack);
-
+ 
  return 0;
 }
 
