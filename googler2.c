@@ -73,7 +73,7 @@ int main(int argc, char ** argv)
   return 0;    
  }    
 
- if(strlen(argv[1])<=127)
+ if(strlen(argv[1])<=126)
   BUSCA=argv[1];
  else
  {
