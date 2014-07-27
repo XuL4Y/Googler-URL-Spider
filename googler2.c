@@ -84,13 +84,13 @@ main(int argc, char ** argv)
  char *regex="(https?|ftp)+://[^ \t\r\n\v\f]*";
  int count=0,sum_mem=0;
 
-	if(argc<3) 
+	if (argc<3) 
 	{
 		help();    
 		exit(0);    
 	}    
 
-	if(strnlen(argv[1],50)<=49)
+	if (strnlen(argv[1],50)<=49)
 		BUSCA=argv[1];
 	else
 	{
@@ -98,7 +98,7 @@ main(int argc, char ** argv)
 		exit(0);
 	}
 
-	if(strnlen(argv[2],8)<=4)
+	if (strnlen(argv[2],8)<=4)
 		times=atoi(argv[2]);
 	else 
 	{
@@ -106,7 +106,7 @@ main(int argc, char ** argv)
 		exit(0);
 	}
 
-	if(strnlen(argv[3],16)<=15)
+	if (strnlen(argv[3],16)<=15)
 		arquivo=argv[3]; 
 	else 
 	{
@@ -116,7 +116,7 @@ main(int argc, char ** argv)
 
 	fprintf(stdout,"\nSearch %s in  %d pages, log at %s \n",BUSCA,times,arquivo);
 
-	while(times)
+	while (times)
 	{
 		sprintf(NUM,"%d",times);
 		sum_mem=strlen(GOOGLE1)+strlen(GOOGLE2)+strlen(BUSCA)+strlen(NUM)+4;
@@ -164,7 +164,7 @@ main(int argc, char ** argv)
    			} 
   		}
 
-  		if(chunk.size < 10)
+  		if (chunk.size < 10)
   		{ 
    			free(chunk.memory);
    			chunk.memory=NULL;	
@@ -175,12 +175,12 @@ main(int argc, char ** argv)
   		times--;
  	}
 
-	if(NUM)
+	if (NUM)
 	{  
 		free(NUM);
 		NUM=NULL;
 	}
-	if(GoogleURL)
+	if (GoogleURL)
 	{
 		free(GoogleURL);
 		GoogleURL=NULL;
@@ -189,7 +189,7 @@ main(int argc, char ** argv)
  chunk.memory=calloc(1,1);
  memset(chunk.memory,0,1);
 
-	if(chunk.memory)
+	if ( chunk.memory)
 	{
 		free(chunk.memory);
 		chunk.memory=NULL;
@@ -223,13 +223,13 @@ xrealloc (void *ptr, size_t size)
 
 
 void *
-xmalloc(unsigned int len)
+xmalloc (unsigned int len)
 {
  void *ptr;
 
  ptr=malloc(len);
 
-	if(ptr==NULL) 
+	if (ptr==NULL) 
  	{
 		DEBUG("fail malloc with size %d",len);
 	} else {
@@ -246,7 +246,7 @@ WriteMemoryCallback(void *ptr,size_t size,size_t nmemb,void *data)
  struct MemoryStruct *mem=(struct MemoryStruct *)data;
  mem->memory=xrealloc(mem->memory,mem->size+realsize+1);
 
-	if(mem->memory) 
+	if (mem->memory) 
 	{
 		memcpy(&(mem->memory[mem->size]),ptr,realsize);
 		mem->size+=realsize;
@@ -258,7 +258,7 @@ WriteMemoryCallback(void *ptr,size_t size,size_t nmemb,void *data)
 
 //string replace
 char *
-StrRep(char *st,char *orig,char *repl,int mim) 
+StrRep (char *st,char *orig,char *repl,int mim) 
 {
  char bufer[mim];
  char *ch;
@@ -278,7 +278,7 @@ StrRep(char *st,char *orig,char *repl,int mim)
  return out;
 }
 
-char *regexp(char *string, char *patrn) 
+char *regexp (char *string, char *patrn) 
 {     
  int i=0,w=0,len=0,begin=0,end=0;
  char *word=NULL;
@@ -290,7 +290,7 @@ char *regexp(char *string, char *patrn)
  
  word=xcalloc(1,1);
 
-	if(!(regexec(&rgT,string,1,&match,0)))
+	if( !(regexec(&rgT,string,1,&match,0)) )
 	{
 		begin=(int)match.rm_so;
 		end=(int)match.rm_eo;
