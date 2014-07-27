@@ -7,7 +7,7 @@ Just Another Googler Spider
 to help you in google hacking                   
 
 -------------------------------------------- 
-THANKS sigsegv and di0_ to help me in debug ;-)
+THANKS sigsegv and di0_ who helped me with debugging !
 ---
 HOW to USE ?
 apt-get install libcurl-dev; make; ./googler2
