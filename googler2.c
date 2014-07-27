@@ -90,7 +90,7 @@ main(int argc, char ** argv)
 		exit(0);    
 	}    
 
-	if(strnlen(argv[1],49)<=49)
+	if(strnlen(argv[1],50)<=49)
 		BUSCA=argv[1];
 	else
 	{
@@ -98,7 +98,7 @@ main(int argc, char ** argv)
 		exit(0);
 	}
 
-	if(strnlen(argv[2],4)<=4)
+	if(strnlen(argv[2],8)<=4)
 		times=atoi(argv[2]);
 	else 
 	{
@@ -106,7 +106,7 @@ main(int argc, char ** argv)
 		exit(0);
 	}
 
-	if(strnlen(argv[3],15)<=15)
+	if(strnlen(argv[3],16)<=15)
 		arquivo=argv[3]; 
 	else 
 	{
