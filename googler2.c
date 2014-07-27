@@ -10,7 +10,7 @@ to help you in google hacking
 THANKS sigsegv and di0_ to help me in debug ;-)
 ---
 HOW to USE ?
-apt-get install libcurl-dev; gcc -o Googler Googler.c -lcurl; ./Googler
+apt-get install libcurl-dev; make; ./googler2
 
 */
 #include <stdio.h>
