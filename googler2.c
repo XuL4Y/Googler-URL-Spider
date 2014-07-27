@@ -84,13 +84,13 @@ main(int argc, char ** argv)
  char *regex="(https?|ftp)+://[^ \t\r\n\v\f]*";
  int count=0,sum_mem=0;
 
-	if (argc<3) 
+	if ( argc<3 ) 
 	{
 		help();    
 		exit(0);    
 	}    
 
-	if (strnlen(argv[1],50)<=49)
+	if ( strnlen(argv[1],50)<=49 )
 		BUSCA=argv[1];
 	else
 	{
@@ -98,7 +98,7 @@ main(int argc, char ** argv)
 		exit(0);
 	}
 
-	if (strnlen(argv[2],8)<=4)
+	if ( strnlen(argv[2],8)<=4 )
 		times=atoi(argv[2]);
 	else 
 	{
@@ -106,7 +106,7 @@ main(int argc, char ** argv)
 		exit(0);
 	}
 
-	if (strnlen(argv[3],16)<=15)
+	if ( strnlen(argv[3],16)<=15 )
 		arquivo=argv[3]; 
 	else 
 	{
@@ -116,7 +116,7 @@ main(int argc, char ** argv)
 
 	fprintf(stdout,"\nSearch %s in  %d pages, log at %s \n",BUSCA,times,arquivo);
 
-	while (times)
+	while ( times )
 	{
 		sprintf(NUM,"%d",times);
 		sum_mem=strlen(GOOGLE1)+strlen(GOOGLE2)+strlen(BUSCA)+strlen(NUM)+4;
@@ -139,13 +139,13 @@ main(int argc, char ** argv)
 		curl_easy_perform(curl_handle);
 		curl_easy_cleanup(curl_handle);
 
-		if(chunk.memory)
+		if ( chunk.memory )
 		{
-			while(strstr(chunk.memory,"http"))
+			while( strstr(chunk.memory,"http") )
 			{
 				match=regexp(chunk.memory,regex);
-				if(match)
-					if( !( strstr(match,"google") || strstr(match,"youtube") || strstr(match,"orkut") || strstr(match,"gstatic")) )
+				if ( match )
+					if ( !( strstr(match,"google") || strstr(match,"youtube") || strstr(match,"orkut") || strstr(match,"gstatic")) )
 					{
 // remove token
 						chomp(match);
@@ -155,7 +155,7 @@ main(int argc, char ** argv)
 					}
 // erase URL, run next URL
 				chunk.memory=StrRep(chunk.memory,match,replace,chunk.size);
-				if(match)
+				if ( match )
 				{	
 					free(match);
 					match=NULL;
@@ -215,7 +215,7 @@ xrealloc (void *ptr, size_t size)
 {
  void *p = realloc (ptr, size);
 
-	if(p==NULL) 
+	if ( p==NULL) 
 		DEBUG("Error in realloc()");
 
 	return p;
@@ -229,7 +229,7 @@ xmalloc (unsigned int len)
 
  ptr=malloc(len);
 
-	if (ptr==NULL) 
+	if ( ptr==NULL ) 
  	{
 		DEBUG("fail malloc with size %d",len);
 	} else {
@@ -246,7 +246,7 @@ WriteMemoryCallback(void *ptr,size_t size,size_t nmemb,void *data)
  struct MemoryStruct *mem=(struct MemoryStruct *)data;
  mem->memory=xrealloc(mem->memory,mem->size+realsize+1);
 
-	if (mem->memory) 
+	if ( mem->memory ) 
 	{
 		memcpy(&(mem->memory[mem->size]),ptr,realsize);
 		mem->size+=realsize;
@@ -263,10 +263,10 @@ StrRep (char *st,char *orig,char *repl,int mim)
  char bufer[mim];
  char *ch;
 
-	if(!orig)
+	if( !orig )
 		return "\0";
 
-	if(!(ch=strstr(st, orig)) )
+	if( !(ch=strstr(st, orig)) )
 		return st;
 
  strncpy(bufer, st, ch-st);  
@@ -309,9 +309,9 @@ char *regexp (char *string, char *patrn)
 void 
 chomp(char *str)
 {
-	while(*str) 
+	while ( *str ) 
 	{
-		if(*str=='"') 
+		if( *str=='"' ) 
 		{
 			*str=0;
 			return;
@@ -326,7 +326,7 @@ int WriteFile(char *file,char *str)
  
  arq=fopen(file,"a"); 
 
-	if(!arq) 
+	if ( !arq ) 
 	{
 		DEBUG("error in WriteFile() %s",file); 
 		return 0;
