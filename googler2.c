@@ -163,9 +163,7 @@ main(int argc, char ** argv)
 
    			} 
   		}
-
-   		xfree((void **)&chunk.memory);
-
+		
   		curl_global_cleanup();
 
   		times--;
