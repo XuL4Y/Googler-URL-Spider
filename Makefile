@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Ofast -lcurl -fstack-protector-all
+CFLAGS=-Wall -Ofast -mtune=native -march=native -lcurl -fstack-protector-all
 BINDIR=/usr/bin
 
 googler2: googler2.c 

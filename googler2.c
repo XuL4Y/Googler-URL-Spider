@@ -19,6 +19,7 @@ apt-get install libcurl-dev; make; ./googler2
 #include <regex.h>
 #include <curl/curl.h>
 #include <curl/easy.h>
+#include <assert.h>
 #include <time.h>
 
 //set DEBUG ON
@@ -34,6 +35,8 @@ apt-get install libcurl-dev; make; ./googler2
 		fprintf(stderr,"\n\n--- DEBUG-END ---\n"); \
 	} while (0);
 
+
+void xfree(void **ptr);
 void *xcalloc (size_t mem, size_t size);
 void *xrealloc (void *ptr, size_t size);
 void *xmalloc (unsigned int len);
@@ -73,9 +76,9 @@ main(int argc, char ** argv)
 // URL googler make
  char *GOOGLE1="http://www.google.com/search?&q=";
  char *GOOGLE2="&start=";
- char *NUM=(char *)xmalloc(10*sizeof(char));
- char *GoogleURL=(char *)xmalloc(1*sizeof(char));
- char *BUSCA=(char *)xmalloc(50*sizeof(char));
+ char *NUM=xmalloc(10*sizeof(char));
+ char *GoogleURL=xmalloc(1*sizeof(char));
+ char *BUSCA=xmalloc(50*sizeof(char));
  int  times=0;
 
 //REGEX vars
@@ -120,7 +123,7 @@ main(int argc, char ** argv)
 	{
 		sprintf(NUM,"%d",times);
 		sum_mem=strlen(GOOGLE1)+strlen(GOOGLE2)+strlen(BUSCA)+strlen(NUM)+4;
-		GoogleURL=(char *)xrealloc(GoogleURL,sum_mem);
+		GoogleURL=xrealloc(GoogleURL,sum_mem);
  		sprintf(GoogleURL,"%s%s%s%d0",GOOGLE1,BUSCA,GOOGLE2,times);
 
 		puts(GoogleURL);
@@ -155,47 +158,38 @@ main(int argc, char ** argv)
 					}
 // erase URL, run next URL
 				chunk.memory=StrRep(chunk.memory,match,replace,chunk.size);
-				if ( match )
-				{	
-					free(match);
-					match=NULL;
-    				}
+				xfree((void **)&match);
+				
 
    			} 
   		}
 
-  		if (chunk.size < 10)
-  		{ 
-   			free(chunk.memory);
-   			chunk.memory=NULL;	
-  		}	
+   		xfree((void **)&chunk.memory);
 
   		curl_global_cleanup();
 
   		times--;
  	}
-
-	if (NUM)
-	{  
-		free(NUM);
-		NUM=NULL;
-	}
-	if (GoogleURL)
-	{
-		free(GoogleURL);
-		GoogleURL=NULL;
-	}
-
- chunk.memory=calloc(1,1);
- memset(chunk.memory,0,1);
-
-	if ( chunk.memory)
-	{
-		free(chunk.memory);
-		chunk.memory=NULL;
-	}
+	
+	xfree((void **)&NUM);
+	xfree((void **)&GoogleURL);
+ 	chunk.memory=calloc(1,1);
+ 	memset(chunk.memory,0,1);
+	xfree((void **)&chunk.memory);
 
  exit(0);
+}
+
+
+void xfree(void **ptr)
+{
+	assert(ptr);
+
+	if( ptr != NULL )
+	{
+		free(*ptr);
+		*ptr=NULL;
+	}
 }
 
 
