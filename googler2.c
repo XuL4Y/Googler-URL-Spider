@@ -174,6 +174,7 @@ main(int argc, char ** argv)
  	chunk.memory=calloc(1,1);
  	memset(chunk.memory,0,1);
 	xfree((void **)&chunk.memory);
+	xfree((void **)&BUSCA);
 
  exit(0);
 }
