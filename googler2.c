@@ -21,6 +21,18 @@ apt-get install libcurl-dev; make; ./googler2
 #include <curl/easy.h>
 #include <assert.h>
 #include <time.h>
+#include <sys/resource.h>
+
+// this function prevent to write core dump
+void no_write_coredump(void) 
+{
+  struct rlimit rlim;
+   
+  rlim.rlim_cur = 0; 
+  rlim.rlim_max = 0; 
+  setrlimit(RLIMIT_CORE, &rlim);
+
+}
 
 //set DEBUG ON
 #define BUGVIEW 1
@@ -65,6 +77,7 @@ struct MemoryStruct {
 int 
 main(int argc, char ** argv)
 {
+ no_write_coredump();
  struct MemoryStruct chunk;
 
 // curl vars
